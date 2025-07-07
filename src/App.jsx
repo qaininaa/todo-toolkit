@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { addTodo, checkCompleted } from "./redux/slices/todoSlice";
+import {
+  addTodo,
+  checkCompleted,
+  deleteCompleted,
+} from "./redux/slices/todoSlice";
 
 const App = () => {
   const [task, setTask] = useState("");
@@ -13,7 +17,7 @@ const App = () => {
 
     const newId = todos[todos.length - 1].id + 1;
 
-    dispatch(addTodo({ id: newId, task }));
+    dispatch(addTodo({ id: newId, task, completed: false }));
   };
 
   const handleChecked = (id, check) => {
@@ -22,6 +26,10 @@ const App = () => {
     if (findById) {
       dispatch(checkCompleted({ id, completed: check }));
     }
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteCompleted());
   };
 
   return (
@@ -40,6 +48,13 @@ const App = () => {
         />
         <button type="submit">Tambah</button>
       </form>
+      <button
+        type="button"
+        style={{ marginTop: "10px", background: "transparent", color: "red" }}
+        onClick={() => handleDelete()}
+      >
+        hapus list selesai
+      </button>
       {todos.map((todo, i) => (
         <div key={i} style={{ display: "flex", gap: "10px" }}>
           <input
