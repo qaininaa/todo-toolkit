@@ -10,10 +10,7 @@ const todoSlice = createSlice({
   },
   reducers: {
     addTodo: (state, action) => {
-      return {
-        ...state,
-        data: [...state.data, action.payload],
-      };
+      state.data.push(action.payload);
     },
     checkCompleted: (state, action) => {
       const { id, completed } = action.payload;

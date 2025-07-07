@@ -48,8 +48,15 @@ const App = () => {
             id=""
             onChange={(e) => handleChecked(todo.id, e.target.checked)}
           />
-          <p>{todo.id}</p>
-          <p>{todo.task}</p>
+          {todo.completed === true ? (
+            <p style={{ textDecoration: "line-through" }}>
+              {todo.id} {todo.task}
+            </p>
+          ) : (
+            <p>
+              {todo.id} {todo.task}
+            </p>
+          )}
         </div>
       ))}
     </>
