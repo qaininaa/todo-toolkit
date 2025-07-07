@@ -5,6 +5,7 @@ import {
   addTodo,
   checkCompleted,
   deleteCompleted,
+  deleteTask,
 } from "./redux/slices/todoSlice";
 
 const App = () => {
@@ -15,7 +16,7 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newId = todos[todos.length - 1].id + 1;
+    const newId = todos.length ? todos[todos.length - 1].id + 1 : 1;
 
     dispatch(addTodo({ id: newId, task, completed: false }));
   };
@@ -26,10 +27,6 @@ const App = () => {
     if (findById) {
       dispatch(checkCompleted({ id, completed: check }));
     }
-  };
-
-  const handleDelete = () => {
-    dispatch(deleteCompleted());
   };
 
   return (
@@ -51,7 +48,7 @@ const App = () => {
       <button
         type="button"
         style={{ marginTop: "10px", background: "transparent", color: "red" }}
-        onClick={() => handleDelete()}
+        onClick={() => dispatch(deleteCompleted())}
       >
         hapus list selesai
       </button>
@@ -72,6 +69,17 @@ const App = () => {
               {todo.id} {todo.task}
             </p>
           )}
+          <button
+            type="button"
+            style={{
+              background: "transparent",
+              color: "red",
+              fontWeight: "bold",
+            }}
+            onClick={() => dispatch(deleteTask({ id: todo.id }))}
+          >
+            x
+          </button>
         </div>
       ))}
     </>
